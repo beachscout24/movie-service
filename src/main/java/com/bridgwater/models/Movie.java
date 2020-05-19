@@ -1,13 +1,16 @@
 package com.bridgwater.models;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Movie {
 
     @Id
-    private Integer movieId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
     private String name;
 
     public Movie() {
@@ -17,12 +20,12 @@ public class Movie {
     public Movie(int i, String sneakers) {
     }
 
-    public Integer getMovieId() {
-        return movieId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setMovieId(Integer movieId) {
-        this.movieId = movieId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -36,7 +39,7 @@ public class Movie {
     @Override
     public String toString() {
         return "Movie{" +
-                "movieId=" + movieId +
+                "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
     }
