@@ -12,12 +12,10 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String name;
+    private String description;
 
     public Movie() {
         super();
-    }
-
-    public Movie(int i, String sneakers) {
     }
 
     public Integer getId() {
@@ -36,11 +34,20 @@ public class Movie {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         return "Movie{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
 }

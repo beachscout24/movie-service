@@ -5,19 +5,27 @@ import com.bridgwater.respository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
+
 @RestController
-@RequestMapping("/movies")
 public class MovieController {
 
     @Autowired
     private MovieRepository movieRepository;
 
-    @GetMapping("/{id}")
-    public Movie getMovieInfo(@PathVariable("id") String id) {
-        return new Movie(1, "Sneakers");
+    @GetMapping("/movies")
+    public List<Movie> getMovies() {
+        return (List<Movie>) movieRepository.findAll();
     }
 
-    @PostMapping("/movie")
+    @GetMapping("/movies/{movieName}")
+    public Movie getMoviesByMovie(@PathVariable String movieName) {
+        Optional<Movie> movie = movieRepository.findMovieByName(movieName);
+        return movie.orElse(null);
+    }
+
+    @PostMapping("/movies/movie")
     public Integer saveMovie(@RequestBody Movie movie) {
         Movie savedMovie = movieRepository.save(movie);
         return savedMovie.getId();
