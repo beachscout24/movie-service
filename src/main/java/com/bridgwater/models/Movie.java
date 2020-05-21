@@ -1,19 +1,28 @@
 package com.bridgwater.models;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
+@ApiModel("Details of a Movie Object")
 public class Movie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @ApiModelProperty("The id of a movie")
     private Integer id;
+    @ApiModelProperty("The movieid of a movie")
     private String movieId;
+    @ApiModelProperty("The name of a movie")
     private String name;
+    @ApiModelProperty("The description of a movie")
     private String description;
+    @ApiModelProperty("The rating of a movie")
     private Integer rating;
 
     public Movie() {
