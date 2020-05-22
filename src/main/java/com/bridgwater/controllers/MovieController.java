@@ -7,6 +7,7 @@ import com.bridgwater.respository.MovieRepository;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -28,26 +29,26 @@ public class MovieController {
     @ApiOperation(value = "Get complete list of movies",
             notes = "Retrieve the complete list of movies",
             response = List.class)
-    public List<Movie> getMovies() {
-        return (List<Movie>) movieRepository.findAll();
+    public ResponseEntity<List<Movie>> getMovies() {
+        return ResponseEntity.ok((List<Movie>) movieRepository.findAll());
     }
 
     @GetMapping("/movies/{movieId}")
     @ApiOperation(value = "Finds a movie by id",
             notes = "Provide an Id to look up a specific movie",
             response = Movie.class)
-    public Movie getMoviesByMovie(@PathVariable String movieId) {
+    public ResponseEntity<Movie> getMoviesByMovie(@PathVariable String movieId) {
         log.info("Getting movie from themoviedb.org");
         MovieSummary movieSummary = restTemplate.getForObject(accessor.movieDBUrl + movieId + accessor.apiKey, MovieSummary.class);
-        return new Movie(movieId, movieSummary.getTitle(), movieSummary.getOverview(), (movieSummary.getRating() == null) ? 5 : movieSummary.getRating());
+        return ResponseEntity.ok(new Movie(movieId, movieSummary.getTitle(), movieSummary.getOverview(), (movieSummary.getRating() == null) ? 5 : movieSummary.getRating()));
     }
 
     @PostMapping("/movies/movie")
     @ApiOperation(value = "Save a given movie",
             notes = "Provide a specific movie and returns it's id",
             response = Integer.class)
-    public Integer saveMovie(@RequestBody Movie movie) {
+    public ResponseEntity<Integer> saveMovie(@RequestBody Movie movie) {
         Movie savedMovie = movieRepository.save(movie);
-        return savedMovie.getId();
+        return ResponseEntity.ok(savedMovie.getId());
     }
 }
